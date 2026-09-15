@@ -1,0 +1,26 @@
+# Virtual environment
+.venv/
+venv/
+
+# Secrets
+.env
+
+# Generated data / outputs
+logs/
+*.log
+*.db
+*.sqlite3
+output/csv/*
+output/excel/*
+!output/csv/.gitkeep
+!output/excel/.gitkeep
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+dist/
+build/
+*.egg-info/
