@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-import pytest
-
 from scraper.parsers import (
     extract_source_id,
     parse_categories,

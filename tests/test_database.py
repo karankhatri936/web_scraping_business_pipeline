@@ -7,8 +7,8 @@ import sqlite3
 import pandas as pd
 import pytest
 
-from data.models import ProductRecord
 from data.cleaner import clean_products, records_to_dataframe
+from data.models import ProductRecord
 from database.connection import DatabaseConnection
 from database.repository import ProductRepository
 from utils.exceptions import DatabaseError
@@ -127,12 +127,11 @@ def test_invalid_record_rejected_by_db_constraint(repo, cleaned_df):
 def test_session_rollback_on_error(tmp_path):
     repo = ProductRepository(tmp_path / "fresh.db")
     repo.init_db()
-    with pytest.raises(DatabaseError):
-        with DatabaseConnection(tmp_path / "fresh.db").session() as conn:
-            conn.execute(
-                "INSERT INTO scrape_runs (started_at, status) VALUES ('t', 'running')"
-            )
-            raise sqlite3.OperationalError("boom")
+    with pytest.raises(DatabaseError), DatabaseConnection(tmp_path / "fresh.db").session() as conn:
+        conn.execute(
+            "INSERT INTO scrape_runs (started_at, status) VALUES ('t', 'running')"
+        )
+        raise sqlite3.OperationalError("boom")
     with DatabaseConnection(tmp_path / "fresh.db").session() as conn:
         count = conn.execute("SELECT COUNT(*) AS n FROM scrape_runs").fetchone()["n"]
     assert count == 0

@@ -52,7 +52,6 @@ def test_new_page_after_close_raises(manager):
 
 
 def test_exception_inside_context_still_closes(manager):
-    with pytest.raises(RuntimeError, match="boom"):
-        with manager:
-            raise RuntimeError("boom")
+    with pytest.raises(RuntimeError, match="boom"), manager:
+        raise RuntimeError("boom")
     assert not manager.is_running

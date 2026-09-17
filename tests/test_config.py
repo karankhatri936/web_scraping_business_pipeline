@@ -62,7 +62,7 @@ def test_output_directories_created(tmp_path, monkeypatch):
     monkeypatch.setenv("OUTPUT_CSV_DIR", str(tmp_path / "csv"))
     monkeypatch.setenv("OUTPUT_EXCEL_DIR", str(tmp_path / "excel"))
     monkeypatch.setenv("DB_PATH", str(tmp_path / "sub" / "db.sqlite3"))
-    settings = load_settings(tmp_env_missing(monkeypatch))
+    load_settings(tmp_env_missing(monkeypatch))
     assert (tmp_path / "logs").is_dir()
     assert (tmp_path / "csv").is_dir()
     assert (tmp_path / "excel").is_dir()

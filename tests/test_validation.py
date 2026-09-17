@@ -2,24 +2,22 @@
 
 from __future__ import annotations
 
-import pytest
-
 from data.models import ProductRecord
 from data.validator import IssueType, validate_record, validate_records
 
 
 def make_record(**overrides) -> ProductRecord:
-    fields = dict(
-        name="Test Product",
-        url="https://books.toscrape.com/catalogue/test_1/index.html",
-        price=10.0,
-        currency="GBP",
-        category="Travel",
-        availability="In stock",
-        rating=4,
-        image_url="https://books.toscrape.com/media/1.jpg",
-        source_product_id="test_1",
-    )
+    fields = {
+        "name": "Test Product",
+        "url": "https://books.toscrape.com/catalogue/test_1/index.html",
+        "price": 10.0,
+        "currency": "GBP",
+        "category": "Travel",
+        "availability": "In stock",
+        "rating": 4,
+        "image_url": "https://books.toscrape.com/media/1.jpg",
+        "source_product_id": "test_1",
+    }
     fields.update(overrides)
     return ProductRecord(**fields)
 

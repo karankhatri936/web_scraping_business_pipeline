@@ -110,7 +110,7 @@ def run_scheduler(settings: Settings) -> None:
         scheduler.start()
     except (KeyboardInterrupt, SystemExit):
         logger.info("Shutdown requested; stopping scheduler")
-    except Exception as exc:  # noqa: BLE001 - surfaced, never swallowed
+    except Exception as exc:
         raise SchedulerError(f"Scheduler failed: {exc}") from exc
     finally:
         if scheduler.running:

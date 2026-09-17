@@ -46,7 +46,7 @@ def _first_currency(df: pd.DataFrame) -> str | None:
 def compute_kpis(df: pd.DataFrame) -> dict[str, Any]:
     """Headline KPIs for the dashboard sheet."""
     kpis: dict[str, Any] = {
-        "total_products": int(len(df)),
+        "total_products": len(df),
         "unique_products": int(df["url"].nunique()) if "url" in df.columns else 0,
         "categories": int(df["category"].nunique()) if "category" in df.columns else 0,
         "currency": _first_currency(df),
@@ -103,7 +103,7 @@ def compute_by_category(df: pd.DataFrame) -> pd.DataFrame:
     for category, sub in grouped:
         row: dict[str, Any] = {
             "category": category,
-            "product_count": int(len(sub)),
+            "product_count": len(sub),
             "in_stock": (
                 int((sub["availability_status"] == "Available").sum())
                 if "availability_status" in sub.columns

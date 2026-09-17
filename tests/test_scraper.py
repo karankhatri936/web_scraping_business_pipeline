@@ -165,7 +165,6 @@ def test_missing_categories_raise(settings, page_factory, monkeypatch):
 
 def test_robots_disallowed_raises(settings, monkeypatch):
     """A disallowing robots.txt must abort the run before scraping."""
-    from urllib import robotparser
 
     class DisallowingParser:
         def set_url(self, url):

@@ -16,7 +16,6 @@ import pandas as pd
 from data.models import utc_now_iso
 from database.connection import DatabaseConnection
 from database.models import SCHEMA_SQL
-from utils.exceptions import DatabaseError
 from utils.logger import get_logger
 
 logger = get_logger(__name__)

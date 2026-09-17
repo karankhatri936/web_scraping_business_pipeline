@@ -15,7 +15,7 @@ from __future__ import annotations
 import time
 from dataclasses import dataclass, field
 from urllib import robotparser
-from urllib.parse import urlparse, urljoin
+from urllib.parse import urljoin, urlparse
 
 import playwright.sync_api as pw
 

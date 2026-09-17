@@ -13,6 +13,8 @@ driver are closed even when scraping code raises an exception.
 
 from __future__ import annotations
 
+from typing import Self
+
 from playwright.sync_api import Browser, BrowserContext, Page, sync_playwright
 
 from config import ScraperSettings
@@ -33,7 +35,7 @@ class BrowserManager:
         self._closed = False
 
     # -- context manager protocol ------------------------------------------
-    def __enter__(self) -> "BrowserManager":
+    def __enter__(self) -> Self:
         self.start()
         return self
 
@@ -66,7 +68,7 @@ class BrowserManager:
                 self._settings.navigation_timeout_seconds * 1000
             )
             logger.info("Browser started")
-        except Exception as exc:  # noqa: BLE001 - re-raised as domain error
+        except Exception as exc:
             self.close()
             raise BrowserError(f"Failed to start the browser: {exc}") from exc
 
@@ -76,7 +78,7 @@ class BrowserManager:
             raise BrowserError("Browser not started - use 'with BrowserManager(...)'")
         try:
             return self._context.new_page()
-        except Exception as exc:  # noqa: BLE001
+        except Exception as exc:
             raise BrowserError(f"Failed to create a browser page: {exc}") from exc
 
     def close(self) -> None:

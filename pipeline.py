@@ -22,14 +22,11 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
-import pandas as pd
-
 from analytics.analysis import AnalysisResult, compute_analysis
 from config import Settings, configure_logging
 from data.cleaner import clean_products, records_to_dataframe
 from data.transformer import add_derived_columns
 from data.validator import validate_records
-from database.connection import DatabaseConnection
 from database.repository import ProductRepository
 from reports.csv_report import write_products_csv
 from reports.excel_report import write_excel_report
@@ -74,7 +71,6 @@ def run_pipeline(
     log.info("Pipeline starting | target=%s", settings.base_url)
     log.info("=" * 60)
 
-    db = DatabaseConnection(settings.output.db_path)
     repo = ProductRepository(settings.output.db_path)
     outcome = PipelineOutcome()
 
