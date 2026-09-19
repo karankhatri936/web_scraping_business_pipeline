@@ -15,7 +15,6 @@ from __future__ import annotations
 
 from collections.abc import Callable
 from dataclasses import dataclass, field
-from typing import Any
 from urllib.parse import urljoin
 
 from utils.logger import get_logger
@@ -38,9 +37,9 @@ class PageWalkResult:
 
 def walk_pages(
     start_url: str,
-    loader: Callable[[str], Any | None],
-    visitor: Callable[[str, Any], None],
-    next_href: Callable[[Any], str | None],
+    loader: Callable[[str], object | None],
+    visitor: Callable[[str, object], None],
+    next_href: Callable[[object], str | None],
     max_pages: int = 0,
 ) -> PageWalkResult:
     """Walk a paginated listing from *start_url* until the end.

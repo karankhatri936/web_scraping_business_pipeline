@@ -55,6 +55,7 @@ def test_rating_out_of_range_dropped():
     result = clean_products(df)
     assert result.frame.iloc[0]["rating"] is pd.NA
     assert float(result.frame.iloc[1]["rating"]) == 4.0
+    assert result.invalid_ratings == 1
 
 
 def test_duplicates_removed(sample_records):

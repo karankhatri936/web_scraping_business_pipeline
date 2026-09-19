@@ -54,5 +54,14 @@ class DatabaseConnection:
     @contextmanager
     def transaction(self) -> Iterator[sqlite3.Connection]:
         """Alias of :meth:`session` - explicit transaction semantics."""
-        with self.session() as conn:
+        conn = self.connect()
+        try:
             yield conn
+            conn.commit()
+        except Exception as exc:
+            conn.rollback()
+            if isinstance(exc, sqlite3.Error):
+                raise DatabaseError(f"Database operation failed: {exc}") from exc
+            raise
+        finally:
+            conn.close()

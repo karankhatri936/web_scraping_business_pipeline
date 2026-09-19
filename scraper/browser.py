@@ -7,7 +7,7 @@ Playwright objects for resource handling. Always use as a context manager::
         page = browser.new_page()
         page.goto("https://example.com")
 
-The manager guarantees that the page, browser context, browser and Playwright
+The manager guarantees that the browser context, browser and Playwright
 driver are closed even when scraping code raises an exception.
 """
 

@@ -120,6 +120,8 @@ def run_pipeline(
     cleaned = clean_products(records_to_dataframe(accepted))
     dataset = add_derived_columns(cleaned.frame)
     outcome.details["duplicates_removed_in_cleaning"] = cleaned.duplicates_removed
+    outcome.details["invalid_prices_in_cleaning"] = cleaned.invalid_prices
+    outcome.details["invalid_ratings_in_cleaning"] = cleaned.invalid_ratings
 
     # ---- store ---------------------------------------------------------------
     try:

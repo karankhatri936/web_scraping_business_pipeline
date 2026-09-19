@@ -9,6 +9,7 @@ precisely:
   *optional* fields are repaired by setting them to ``None`` (the record
   stays usable); invalid *required* fields reject the record.
 * ``missing_optional`` - an optional field is absent -> warning only.
+* ``warning``          - informational issues that don't affect validity.
 
 The validator never invents values; it only drops unusable ones.
 """

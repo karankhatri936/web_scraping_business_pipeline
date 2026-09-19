@@ -65,38 +65,37 @@ class BooksToScrapeScraper:
         base_url = self._settings.base_url
         self._check_robots(base_url)
 
-        with self._browser:
-            page = self._browser.new_page()
-            logger.info("Scraping started: %s", base_url)
-            categories = self._load_categories(page, base_url)
-            self.stats.categories_found = len(categories)
+        page = self._browser.new_page()
+        logger.info("Scraping started: %s", base_url)
+        categories = self._load_categories(page, base_url)
+        self.stats.categories_found = len(categories)
 
-            max_categories = self._settings.max_categories
-            selected = categories[:max_categories] if max_categories else categories
-            logger.info(
-                "Scraping %d of %d categories (limit=%s)",
-                len(selected),
-                len(categories),
-                max_categories or "none",
-            )
+        max_categories = self._settings.max_categories
+        selected = categories[:max_categories] if max_categories else categories
+        logger.info(
+            "Scraping %d of %d categories (limit=%s)",
+            len(selected),
+            len(categories),
+            max_categories or "none",
+        )
 
-            for category in selected:
-                if self._product_limit_reached():
-                    logger.info("Product limit reached; stopping category loop")
-                    break
-                self._scrape_category(page, category)
-                self.stats.categories_scraped += 1
+        for category in selected:
+            if self._product_limit_reached():
+                logger.info("Product limit reached; stopping category loop")
+                break
+            self._scrape_category(page, category)
+            self.stats.categories_scraped += 1
 
-            self.stats.records_scraped = len(self._records)
-            logger.info(
-                "Scraping finished: %d record(s), %d page(s) visited, "
-                "%d page(s) failed, %d parser error(s), %d in-run duplicate(s)",
-                len(self._records),
-                self.stats.pages_visited,
-                self.stats.pages_failed,
-                self.stats.parser_errors,
-                self.stats.duplicates_in_run,
-            )
+        self.stats.records_scraped = len(self._records)
+        logger.info(
+            "Scraping finished: %d record(s), %d page(s) visited, "
+            "%d page(s) failed, %d parser error(s), %d in-run duplicate(s)",
+            len(self._records),
+            self.stats.pages_visited,
+            self.stats.pages_failed,
+            self.stats.parser_errors,
+            self.stats.duplicates_in_run,
+        )
         return self._records
 
     # -- robots -------------------------------------------------------------

@@ -48,6 +48,7 @@ class CleanResult:
     rows_out: int = 0
     duplicates_removed: int = 0
     invalid_prices: int = 0
+    invalid_ratings: int = 0
     normalised_availability: int = 0
     notes: list[str] = field(default_factory=list)
 
@@ -159,7 +160,7 @@ def clean_products(raw: pd.DataFrame) -> CleanResult:
     if "rating" in df.columns:
         ratings = pd.to_numeric(df["rating"], errors="coerce").astype("Float64")
         outside = (ratings < 0) | (ratings > 5)
-        result.invalid_prices += int(outside.sum())
+        result.invalid_ratings += int(outside.sum())
         df["rating"] = ratings.mask(outside)
 
     # 5. availability -------------------------------------------------------
@@ -190,10 +191,11 @@ def clean_products(raw: pd.DataFrame) -> CleanResult:
     result.frame = df
     result.rows_out = len(df)
     logger.info(
-        "Cleaning done: %d -> %d rows (%d duplicates removed, %d invalid value(s))",
+        "Cleaning done: %d -> %d rows (%d duplicates removed, %d invalid price(s), %d invalid rating(s))",
         result.rows_in,
         result.rows_out,
         result.duplicates_removed,
         result.invalid_prices,
+        result.invalid_ratings,
     )
     return result
